@@ -8,27 +8,27 @@ import (
 	"errors"
 )
 
-func httpGet(url string) (error,[]byte) {
+func httpGet(url string) ([]byte,error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		return errors.New("访问失败："+url),nil
+		return nil,errors.New("访问失败："+url)
 	}
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-	return nil,body
+	body, err := ioutil.ReadAll(resp.Body)
+	return body,err
 }
 
-func HttpGetJSON(url string) (error,map[string]interface{}) {
-	err ,body := httpGet(url)
+func HttpGetJSON(url string) (map[string]interface{},error) {
+	body,err  := httpGet(url)
 	if err != nil {
-		return err,nil
+		return nil,err
 	}
 	var f map[string]interface{}
 	err = json.Unmarshal(body, &f)
 	if err != nil {
-		return errors.New("JSON解析失败："+err.Error()) ,nil
+		return nil,errors.New("JSON解析失败："+err.Error())
 	}
-	return nil,f
+	return f,nil
 }
 
 func HttpPost(url string, xml string) string {
