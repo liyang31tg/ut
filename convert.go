@@ -3,6 +3,8 @@ package ut
 import (
 	"strconv"
 
+	"bytes"
+	"encoding/binary"
 )
 
 func ToInt64(s interface{}) int64 {
@@ -37,6 +39,19 @@ func ToInt(i interface{}) int {
 		return int(v)
 	}
 	return 0
+}
+
+func Int64ToByte(num int64) []byte {
+	var buffer bytes.Buffer
+	binary.Write(&buffer, binary.BigEndian, num)
+	return buffer.Bytes()
+}
+
+func ByteToInt64(data []byte) int64 {
+	buffer := bytes.NewBuffer(data)
+	var i int64
+	binary.Read(buffer,binary.BigEndian,&i)
+	return i
 }
 
 

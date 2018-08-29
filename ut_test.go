@@ -6,6 +6,9 @@ import (
 )
 
 func TestRandStr(t *testing.T)  {
-	str := RandomStr(127)
-	fmt.Println(str)
+	b:=Int64ToByte(2222222223344424444)
+	fmt.Println(b)
+	i:=ByteToInt64(b)
+	fmt.Println(i)
+
 }

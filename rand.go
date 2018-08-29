@@ -25,10 +25,10 @@ func RandomInterval(minNum int, maxNum int) int {
 	return Rand(maxNum-minNum+1) + minNum
 }
 
-func RandomStr(length int) string{
+func RandomStr(length int) []byte{
 	b := make([]byte,length)
 	for i:=0;i<length;i++{
 		b[i]=byte(Rand(127)) //ascii
 	}
-	return string(b)
+	return b
 }
