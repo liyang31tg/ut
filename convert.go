@@ -41,6 +41,18 @@ func ToInt(i interface{}) int {
 	return 0
 }
 
+func ToString(i interface{}) string{
+	switch v := i.(type) {
+	case int:
+		return strconv.Itoa(v)
+	case string:
+		return v
+	case int64:
+		return ToString(int(v))
+	}
+	return ""
+}
+
 func Int64ToByte(num int64) []byte {
 	var buffer bytes.Buffer
 	binary.Write(&buffer, binary.BigEndian, num)
