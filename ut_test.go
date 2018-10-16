@@ -3,6 +3,7 @@ package ut
 import (
 	"testing"
 	"fmt"
+	"strings"
 )
 
 func TestRandStr(t *testing.T)  {
@@ -12,3 +13,8 @@ func TestRandStr(t *testing.T)  {
 	fmt.Println(i)
 
 }
+
+func TestMd5FileReader(t *testing.T) {
+	s := strings.NewReader("I amqwrqwrerwrwerwerwerwerwer a")
+		fmt.Println(Md5FileReader(s))
+	}

@@ -21,6 +21,7 @@ func SignSha256(str string) string {
 	return fmt.Sprintf("%x",s.Sum(nil))
 }
 
+
 func Md5File(file string) (string,error){
 	f, err := os.Open(file)
 	if err != nil {
