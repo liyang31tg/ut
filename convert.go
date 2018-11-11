@@ -12,8 +12,8 @@ func ToInt64(s interface{}) int64 {
 	case int64:
 		return v
 	case string:
-		i,e:=strconv.ParseInt(v, 10, 64)
-		if e!=nil{
+		i, e := strconv.ParseInt(v, 10, 64)
+		if e != nil {
 			return 0
 		}
 		return i
@@ -41,7 +41,7 @@ func ToInt(i interface{}) int {
 	return 0
 }
 
-func ToString(i interface{}) string{
+func ToString(i interface{}) string {
 	switch v := i.(type) {
 	case int:
 		return strconv.Itoa(v)
@@ -62,8 +62,17 @@ func Int64ToByte(num int64) []byte {
 func ByteToInt64(data []byte) int64 {
 	buffer := bytes.NewBuffer(data)
 	var i int64
-	binary.Read(buffer,binary.BigEndian,&i)
+	binary.Read(buffer, binary.BigEndian, &i)
 	return i
 }
 
-
+/*
+根据一个字段，将切片变成map
+*/
+func MapArr2Map(mapArr []map[string]string, key string) map[string]interface{} {
+	result := make(map[string]interface{})
+	for _, m := range mapArr {
+		result[m[key]] = m
+	}
+	return result
+}
