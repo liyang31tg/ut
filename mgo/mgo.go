@@ -11,15 +11,15 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
-type client struct {
+type Client struct {
 	url     string
 	session *mgo.Session
 	rwLock  sync.RWMutex
 	db      string
 }
 
-func NewClient(dbName, uri string) *client {
-	c := new(client)
+func NewClient(dbName, uri string) *Client {
+	c := new(Client)
 	c.db = dbName
 	c.url = uri
 	c.dial()
@@ -27,7 +27,7 @@ func NewClient(dbName, uri string) *client {
 	return c
 }
 
-func (this *client) Coll(name string) (*mgo.Collection, error) {
+func (this *Client) Coll(name string) (*mgo.Collection, error) {
 	s := this.getSession()
 	if s == nil {
 		return nil, errors.New("net is bad")
@@ -35,28 +35,29 @@ func (this *client) Coll(name string) (*mgo.Collection, error) {
 	return s.DB(this.db).C(name), nil
 }
 
-func (this *client) setSession(s *mgo.Session) {
+func (this *Client) setSession(s *mgo.Session) {
 	this.rwLock.Lock()
 	defer this.rwLock.Unlock()
 	this.session = s
 }
 
-func (this *client) getSession() *mgo.Session {
+func (this *Client) getSession() *mgo.Session {
 	this.rwLock.RLock()
 	defer this.rwLock.RUnlock()
 	return this.session
 }
 
-func (this *client) dial() {
+func (this *Client) dial() {
 	s, err := mgo.Dial(this.url)
 	if err != nil {
+		logger.Err.Println("err:", err, "uri:", this.url)
 		log.Fatal(err)
 	} else {
 		this.setSession(s)
 	}
 }
 
-func (this *client) keepAlive() {
+func (this *Client) keepAlive() {
 	for {
 		s := this.getSession()
 		if s == nil {
