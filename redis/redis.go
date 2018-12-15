@@ -79,6 +79,7 @@ func (this *Client) keepAlive() {
 		c := this.getClient()
 		if c == nil {
 			tmpC := redis.NewClient(this.getOpt())
+			logger.Info.Println("链接redis中...")
 			//心跳拨号为2秒，那么链接就是1秒内5次如果没连上就代表失败
 			for i := 0; i < 5; i++ {
 				_, err := tmpC.Ping().Result()
