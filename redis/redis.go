@@ -3,7 +3,7 @@ package redis
 import (
 	"sync"
 	"time"
-	"ut/logger"
+	"github.com/liyang31tg/ut/logger"
 
 	"github.com/go-redis/redis"
 )
