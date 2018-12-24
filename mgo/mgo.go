@@ -72,5 +72,4 @@ func (this *Client) keepAlive() {
 		}
 		time.Sleep(2 * time.Second)
 	}
-
 }
