@@ -53,6 +53,24 @@ func ToString(i interface{}) string {
 	return ""
 }
 
+func ToBool(s interface{}) bool {
+	switch v := s.(type) {
+	case int:
+		if v == 0 {
+			return false
+		} else {
+			return true
+		}
+	case string:
+		b, er := strconv.ParseBool(v)
+		if er != nil {
+			return false
+		} else {
+			return b
+		}
+	}
+	return false
+}
 func Int64ToByte(num int64) []byte {
 	var buffer bytes.Buffer
 	binary.Write(&buffer, binary.BigEndian, num)
