@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 	"time"
-	"ut"
+	"github.com/liyang31tg/ut"
 )
 
 func TestFunc(t *testing.T) {
