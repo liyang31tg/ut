@@ -34,7 +34,8 @@ func Register(opt *Options) {
 }
 func keepAlive() {
 	for {
-		<-time.NewTicker(2 * time.Second).C
+		// <-time.NewTicker(2 * time.Second).C
+		time.Sleep(2e9)
 		err := Client.Ping()
 		if err != nil {
 			client, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s", defaultopt.User, defaultopt.Pwd, defaultopt.Uri, defaultopt.DB))
