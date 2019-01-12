@@ -1,6 +1,7 @@
 package ut
 
 import (
+	"encoding/json"
 	"strconv"
 
 	"bytes"
@@ -93,4 +94,15 @@ func MapArr2Map(mapArr []map[string]string, key string) map[string]interface{} {
 		result[m[key]] = m
 	}
 	return result
+}
+
+func Byte2Map(content []byte) map[string]interface{} {
+	var m = map[string]interface{}{}
+	err := json.Unmarshal(content, &m)
+	if err != nil {
+		return map[string]interface{}{}
+	} else {
+		return m
+	}
+
 }
