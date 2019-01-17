@@ -1,6 +1,7 @@
 package ut
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -31,25 +32,38 @@ func HttpGetJSON(url string) (map[string]interface{}, error) {
 	return f, nil
 }
 
+func HttpPostJSON(url string, p interface{}) (interface{}, error) {
+	client := &http.Client{}
+	data, err := json.Marshal(p)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewReader(data))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	return body, err
+}
+
 func HttpPost(url string, xml string) string {
 	client := &http.Client{}
-
 	req, err := http.NewRequest("POST", url, strings.NewReader(xml))
 	if err != nil {
 	}
-
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-
 	resp, err := client.Do(req)
 	if err != nil {
 	}
-
 	defer resp.Body.Close()
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 	}
-
 	return string(body)
-
 }
