@@ -24,7 +24,7 @@ type Options struct {
 func Register(opt *Options) {
 	client, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s", opt.User, opt.Pwd, opt.Uri, opt.DB))
 	if err != nil {
-		logger.Err.Println(err)
+		logger.Err.Println("请先把mysql给启动起来：", err)
 		log.Fatal(err)
 	} else {
 		Client = client
