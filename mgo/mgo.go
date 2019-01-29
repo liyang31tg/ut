@@ -4,11 +4,12 @@ import (
 	"errors"
 	"sync"
 	"time"
+
 	"github.com/liyang31tg/ut/logger"
 
 	"log"
 
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 )
 
 type Client struct {
@@ -50,7 +51,7 @@ func (this *Client) getSession() *mgo.Session {
 func (this *Client) dial() {
 	s, err := mgo.Dial(this.url)
 	if err != nil {
-		logger.Err.Println("err:", err, "uri:", this.url)
+		logger.Err.Println("请先把mongo给启动起来；err:", err, "uri:", this.url)
 		log.Fatal(err)
 	} else {
 		this.setSession(s)
