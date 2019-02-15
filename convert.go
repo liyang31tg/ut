@@ -72,6 +72,43 @@ func ToBool(s interface{}) bool {
 	}
 	return false
 }
+
+func ToFloat64(s interface{}) float64 {
+	switch v := s.(type) {
+	case int:
+		return float64(v)
+	case string:
+		r, e := strconv.ParseFloat(v, 64)
+		if e != nil {
+			return 0
+		}
+		return r
+	case float32:
+		return float64(v)
+	case float64:
+		return v
+	}
+	return 0
+}
+
+func ToFloat32(s interface{}) float32 {
+	switch v := s.(type) {
+	case int:
+		return float32(v)
+	case string:
+		r, e := strconv.ParseFloat(v, 32)
+		if e != nil {
+			return 0
+		}
+		return ToFloat32(r)
+	case float32:
+		return v
+	case float64:
+		return float32(v)
+	}
+	return 0
+}
+
 func Int64ToByte(num int64) []byte {
 	var buffer bytes.Buffer
 	binary.Write(&buffer, binary.BigEndian, num)
