@@ -1,18 +1,19 @@
 package logger
 
 import (
-	"github.com/robfig/cron"
 	"log"
 	"os"
 	"time"
+
 	"github.com/fatih/color"
+	"github.com/robfig/cron"
 )
 
-var Err  = log.New(os.Stderr,color.RedString("error "),log.LstdFlags|log.Lshortfile)
-var Info  = log.New(os.Stdout,"",log.LstdFlags|log.Lshortfile)
+var Err = log.New(os.Stderr, color.RedString("error "), log.LstdFlags|log.Lshortfile)
+var Info = log.New(os.Stdout, "", log.LstdFlags|log.Lshortfile)
 
 func init() {
-	os.Mkdir("logs", 0700)
+	os.Mkdir("logs", 0777)
 	color.NoColor = false
 	setOutput(Err)
 	setOutput(Info)
@@ -26,7 +27,7 @@ func init() {
 }
 func setOutput(l *log.Logger) {
 	logName := time.Now().Format("20060102") + ".log"
-	file, err := os.OpenFile("./logs/"+logName, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0600)
+	file, err := os.OpenFile("./logs/"+logName, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 	//defer file.Close(	)
 	if err != nil {
 		log.Fatalln("fail to create " + logName + ".log file!")
