@@ -14,6 +14,14 @@ func TestRandStr(t *testing.T) {
 }
 
 func TestMapArr2Map(t *testing.T) {
-	mapA := []map[string]string{map[string]string{"name": "liyang", "age": "28"}, map[string]string{"name": "limengxia", "age": "29"}}
-	fmt.Println(MapArr2Map(mapA, "name"))
+	// mapA := []map[string]string{map[string]string{"name": "liyang", "age": "28"}, map[string]string{"name": "limengxia", "age": "29"}}
+	// fmt.Println(MapArr2Map(mapA, "name"))
+}
+
+func TestToCapitalize(t *testing.T) {
+	s := "li"
+	if ToCapitalize(s) != "Li" {
+		t.Error("fail", ToCapitalize(s))
+	}
+
 }

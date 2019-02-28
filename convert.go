@@ -2,6 +2,7 @@ package ut
 
 import (
 	"encoding/json"
+	"reflect"
 	"strconv"
 
 	"bytes"
@@ -125,12 +126,26 @@ func ByteToInt64(data []byte) int64 {
 /*
 根据一个字段，将切片变成map
 */
-func MapArr2Map(mapArr []map[string]string, key string) map[string]interface{} {
-	result := make(map[string]interface{})
-	for _, m := range mapArr {
-		result[m[key]] = m
+// func MapArr2Map(mapArr []map[string]string, key string) map[string]interface{} {
+// 	result := make(map[string]interface{})
+// 	for _, m := range mapArr {
+// 		result[m[key]] = m
+// 	}
+// 	return result
+// }
+
+func Array2Map(arr interface{}, mapkey func(item interface{}) string) map[string]interface{} {
+	m := make(map[string]interface{}, 0)
+	v := reflect.ValueOf(arr)
+	if v.Kind() != reflect.Slice {
+		panic("to slice arr not slice")
 	}
-	return result
+	l := v.Len()
+	for i := 0; i < l; i++ {
+		tmpArr := v.Index(i).Interface()
+		m[mapkey(tmpArr)] = tmpArr
+	}
+	return m
 }
 
 func Byte2Map(content []byte) map[string]interface{} {
@@ -141,5 +156,16 @@ func Byte2Map(content []byte) map[string]interface{} {
 	} else {
 		return m
 	}
+}
 
+func ToCapitalize(str string) string {
+	if len(str) <= 0 {
+		return str
+	}
+	if 'A' <= str[0] && str[0] <= 'Z' {
+		return str
+	}
+	words := []byte(str)
+	words[0] -= 'a' - 'A'
+	return string(words)
 }
