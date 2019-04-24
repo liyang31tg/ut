@@ -21,7 +21,7 @@ type Options struct {
 	DB   string
 }
 
-func Register(opt *Options) {
+func Register(opt *Options) *sql.DB {
 	client, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s", opt.User, opt.Pwd, opt.Uri, opt.DB))
 	if err != nil {
 		logger.Err.Println("请先把mysql给启动起来：", err)
@@ -31,15 +31,15 @@ func Register(opt *Options) {
 		defaultopt = opt
 	}
 	go keepAlive()
-
+	return client
 }
 func keepAlive() {
+	url := fmt.Sprintf("%s:%s@tcp(%s)/%s", defaultopt.User, defaultopt.Pwd, defaultopt.Uri, defaultopt.DB)
 	for {
-		// <-time.NewTicker(2 * time.Second).C
 		time.Sleep(2e9)
 		err := Client.Ping()
 		if err != nil {
-			client, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s", defaultopt.User, defaultopt.Pwd, defaultopt.Uri, defaultopt.DB))
+			client, err := sql.Open("mysql", url)
 			if err != nil {
 				logger.Err.Println(err)
 			} else {
