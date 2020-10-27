@@ -1,11 +1,14 @@
 package redis
 
 import (
-	"time"
 	"fmt"
 	"strconv"
 	"testing"
+	"time"
+
+	"github.com/go-redis/redis"
 )
+
 /*
 保障插入顺序不间断，c.GetClient()阻塞式的
 */
@@ -24,8 +27,8 @@ func Test_Hanle(t *testing.T) {
 				<-time.NewTicker(1e9).C
 				i++
 				fmt.Println("handle start :", i)
-				re ,err:= c.GetClient().HSet("table", "k"+strconv.Itoa(i), i).Result()
-				fmt.Println("handle end :", i,re,err)
+				re, err := c.GetClient().HSet("table", "k"+strconv.Itoa(i), i).Result()
+				fmt.Println("handle end :", i, re, err)
 			}
 		}()
 	}
@@ -36,8 +39,8 @@ func Test_Hanle(t *testing.T) {
 			<-time.NewTicker(1e9).C
 			i++
 			fmt.Println("handle start1 :", i)
-			c.HandleSuccess(func() bool {
-				re ,_:= c.GetClient().HSet("table1", "k"+strconv.Itoa(i), i).Result()
+			c.HandleSuccess(func(cc *redis.Client) bool {
+				re, _ := cc.HSet("table1", "k"+strconv.Itoa(i), i).Result()
 				return re
 			})
 			fmt.Println("handle end1 :", i)

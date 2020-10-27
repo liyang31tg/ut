@@ -34,11 +34,7 @@ func Md5File(file string) (string, error) {
 	}
 	defer f.Close()
 
-	h := md5.New()
-	if _, err := io.Copy(h, f); err != nil {
-		return "", err
-	}
-	return fmt.Sprintf("%x", h.Sum(nil)), nil
+	return Md5FileReader(f)
 }
 
 func Md5FileReader(r io.Reader) (string, error) {
