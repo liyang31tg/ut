@@ -14,10 +14,14 @@ type dispatcher struct {
 	handlers map[string]map[string]reflect.Value
 }
 
-func NewDispatcher() *dispatcher {
-	return &dispatcher{
+func NewDispatcher(values ...interface{}) *dispatcher {
+	d := &dispatcher{
 		handlers: map[string]map[string]reflect.Value{},
 	}
+	for _, v := range values {
+		d.Regist(v)
+	}
+	return d
 }
 
 func (d *dispatcher) Regist(value interface{}) error {

@@ -18,8 +18,7 @@ func (this Person) Run2(a int) string {
 
 func Benchmark_HandleRoute(b *testing.B) {
 
-	d := NewDispatcher()
-	d.Regist(Person{Name: "liyang"})
+	d := NewDispatcher(Person{Name: "liyang"})
 
 	for i := 0; i < b.N; i++ {
 		ret, err := d.HandleByRoute("person.run2", i)
