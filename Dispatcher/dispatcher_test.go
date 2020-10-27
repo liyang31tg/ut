@@ -15,7 +15,6 @@ func TestHandleRoute(t *testing.T) {
 	err := d.Regist(p)
 
 	if err != nil {
-
 	}
 	t.Error(errors.New("asdf"))
 
@@ -26,19 +25,4 @@ func TestHandleRoute(t *testing.T) {
 		fmt.Println("ret:", ret)
 	}
 	t.Error("d")
-
-}
-
-type Person struct {
-	Name string
-}
-
-func (this *Person) run(a int) string {
-	fmt.Println("a is ", a)
-	return "ll"
-}
-
-func (this Person) run2(a int) string {
-	fmt.Println("a is ", a)
-	return this.Name
 }

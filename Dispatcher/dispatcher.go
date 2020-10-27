@@ -44,7 +44,6 @@ func (d *dispatcher) RegistByName(module string, value interface{}) error {
 func (d *dispatcher) setMethod(module string, v reflect.Value) {
 	vt := v.Type()
 	mc := vt.NumMethod() //只能获得导出的方法
-	fmt.Println(mc)
 	var c map[string]reflect.Value
 	if moduleV, ok := d.handlers[module]; ok {
 		c = moduleV
@@ -55,7 +54,6 @@ func (d *dispatcher) setMethod(module string, v reflect.Value) {
 	for i := 0; i < mc; i++ {
 		mn := strings.ToLower(vt.Method(i).Name)
 		mt := v.Method(i)
-		fmt.Println("regist method:", mn)
 		c[mn] = mt
 	}
 }
