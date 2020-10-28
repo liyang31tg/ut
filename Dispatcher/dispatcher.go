@@ -73,16 +73,16 @@ func (this *dispatcher) HandleByRoute(route string, arges ...interface{}) (res [
 
 func (this *dispatcher) handle(module, function string, args ...interface{}) (res []reflect.Value, err error) {
 	cb := this.getFunc(module, function)
-	if !cb.IsValid() {
-		err = fmt.Errorf("%v.%v is not valid", module, function)
+	if cb.IsValid() && cb.Kind() == reflect.Func {
+		len := len(args)
+		cbargs := make([]reflect.Value, len)
+		for i := 0; i < len; i++ {
+			cbargs[i] = reflect.ValueOf(args[i])
+		}
+		res = cb.Call(cbargs)
 		return
 	}
-	len := len(args)
-	cbargs := make([]reflect.Value, len)
-	for i := 0; i < len; i++ {
-		cbargs[i] = reflect.ValueOf(args[i])
-	}
-	res = cb.Call(cbargs)
+	err = fmt.Errorf("%v.%v is not valid", module, function)
 	return
 }
 
