@@ -9,6 +9,10 @@ import (
 	"encoding/binary"
 )
 
+func M5() string {
+	return "md5"
+}
+
 func ToInt64(s interface{}) int64 {
 	switch v := s.(type) {
 	case int64:
