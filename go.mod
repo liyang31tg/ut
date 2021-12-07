@@ -1,4 +1,4 @@
-module ut
+module github.com/liyang31tg/ut
 
 go 1.17
 
@@ -7,7 +7,6 @@ require (
 	github.com/fatih/color v1.13.0
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/liyang31tg/ut v0.0.0-20201028094150-751905373da9
 	github.com/robfig/cron v1.2.0
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 )
