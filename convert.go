@@ -10,7 +10,7 @@ import (
 )
 
 func M5() string {
-	return "md5"
+	return "md52"
 }
 
 func ToInt64(s interface{}) int64 {
